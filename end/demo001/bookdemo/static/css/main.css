@@ -1,0 +1,14 @@
+*{
+    margin:0px;
+    padding: 0px;
+    /*font-size: 32px;*/
+    color: #391793;
+
+}
+.content{
+    margin: 100px;
+    padding: 0px;
+    color: blue;
+    font-size: 18px;
+    font-family: 仿宋;
+}
