@@ -9,11 +9,16 @@
     <h1>书籍详情</h1>
     <h2>{{ book.title }}</h2>
     <div>
+
         <ul>
             {% for hero in book.hero_set.all %}
-            <li>{{hero.name}}</li>
+
+            <li>{{hero.name}} <a href="{% url 'booktest:deletehero' hero.id %}">删除</a></li>
+
             {% endfor %}
+
         </ul>
+        <a href="{% url 'booktest:addhero' book.id %}">添加</a>
     </div>
     <div>
         <video src="/static/resource/张芸京 - 偏爱.mp4" controls style="width: 500px;"></video>

@@ -14,7 +14,8 @@
         <ul>
             {% for book in books %}
             {# <a href="/booktest/detail/{{book.id}}"> <li>{{ book }}</li> </a> #}
-            <a href="{% url 'booktest:detail' book.id %}"> <li>{{ book }}</li> </a>
+            <li>  <a href="{% url 'booktest:detail' book.id %}"> {{ book }} </a>
+            <a href="{% url 'booktest:deletebook' book.id %}">删除</a></li>
             {% endfor %}
         </ul>
     </div>
