@@ -23,9 +23,9 @@
             <li>
                 <a href="{% url 'booktest:detail' book.id %}"> {{ book }} ---- {{book.price}} ---- {{book.pub_date}}</a>
 
-                <a href="{% url 'booktest:editbook' book.id %}">编辑</a>
+                <a href="{% url 'booktest:editbook' book.id %}" style="color: black">编辑</a>
 
-                <a href="{% url 'booktest:deletebook' book.id %}">删除</a>
+                <a href="{% url 'booktest:deletebook' book.id %}" style="color: red">删除</a>
             </li>
 
             {% endfor %}

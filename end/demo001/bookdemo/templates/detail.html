@@ -16,8 +16,8 @@
         <li>
             <p>
                 {{hero.book}} -- {{hero.content}} -- {{hero.gender}} -- {{hero.name}}
-                <a href="{% url 'booktest:edithero' hero.id %}">编辑</a>
-                <a href="{% url 'booktest:deletehero' hero.id %}">删除</a>
+                <a href="{% url 'booktest:edithero' hero.id %}" style="color: black">编辑</a>
+                <a href="{% url 'booktest:deletehero' hero.id %}" style="color: red">删除</a>
             </p>
         </li>
 
