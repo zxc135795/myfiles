@@ -6,25 +6,32 @@
     <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-    <h1>书籍详情</h1>
-    <h2>{{ book.title }}</h2>
-    <div>
+<h1>书籍详情</h1>
+<h2>{{ book.title }}</h2>
+<div>
 
-        <ul>
-            {% for hero in book.hero_set.all %}
+    <ul>
+        {% for hero in book.hero_set.all %}
 
-            <li>{{hero.name}} <a href="{% url 'booktest:deletehero' hero.id %}">删除</a></li>
+        <li>
+            <p>
+                {{hero.book}} -- {{hero.content}} -- {{hero.gender}} -- {{hero.name}}
+                <a href="{% url 'booktest:edithero' hero.id %}">编辑</a>
+                <a href="{% url 'booktest:deletehero' hero.id %}">删除</a>
+            </p>
+        </li>
 
-            {% endfor %}
+        {% endfor %}
 
-        </ul>
-        <a href="{% url 'booktest:addhero' book.id %}">添加</a>
-    </div>
-    <div>
-        <video src="/static/resource/张芸京 - 偏爱.mp4" controls style="width: 500px;"></video>
-    </div>
-    {# <a href="/">返回列表</a> #}
-    <a href="{% url 'booktest:index' %}">返回列表</a>
+    </ul>
+
+    <a href="{% url 'booktest:addhero' book.id %}">添加</a>
+</div>
+<div>
+    <video src="/static/resource/张芸京 - 偏爱.mp4" controls style="width: 500px;"></video>
+</div>
+{# <a href="/">返回列表</a> #}
+<a href="{% url 'booktest:index' %}">返回列表</a>
 
 
 </body>

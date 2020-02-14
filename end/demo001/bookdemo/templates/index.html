@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <title>首页</title>
     <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
 </head>
-<body>
+<body >
     <h1>首页欢迎</h1>
 <!--    {{ books }}-->
     <div class="content">
@@ -14,8 +19,15 @@
         <ul>
             {% for book in books %}
             {# <a href="/booktest/detail/{{book.id}}"> <li>{{ book }}</li> </a> #}
-            <li>  <a href="{% url 'booktest:detail' book.id %}"> {{ book }} </a>
-            <a href="{% url 'booktest:deletebook' book.id %}">删除</a></li>
+
+            <li>
+                <a href="{% url 'booktest:detail' book.id %}"> {{ book }} ---- {{book.price}} ---- {{book.pub_date}}</a>
+
+                <a href="{% url 'booktest:editbook' book.id %}">编辑</a>
+
+                <a href="{% url 'booktest:deletebook' book.id %}">删除</a>
+            </li>
+
             {% endfor %}
         </ul>
     </div>

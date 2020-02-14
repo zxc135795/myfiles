@@ -55,6 +55,32 @@ def addhero(request, bookid):
         return redirect(to=url)
 
 
+def edithero(request, heroid):
+    hero = Hero.objects.get(id=heroid)
+    if request.method == 'GET':
+        return render(request, 'edithero.html', {'hero': hero})
+    elif request.method == 'POST':
+        hero.name = request.POST.get('heroname')
+        hero.gender = request.POST.get('sex')
+        hero.content = request.POST.get('content')
+        hero.save()
+        url = reverse('booktest:detail', args=(hero.book.id,))
+        return redirect(to=url)
+
+
+def editbook(request, bookid):
+    book = Book.objects.get(id=bookid)
+    book.pub_date = str(book.pub_date)
+    if request.method == 'GET':
+        return render(request, 'editbook.html', {'book': book})
+    elif request.method == 'POST':
+        book.title = request.POST.get('booktitle')
+        book.price = request.POST.get('price')
+        book.pub_date = request.POST.get('update')
+        book.save()
+        # url = reverse('booktest:index', args=(bookid,))
+        return redirect(to='/')
+
 
 def list(request):
     return HttpResponse("列表详情")
