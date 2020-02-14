@@ -13,16 +13,20 @@
 
         <ul>
             {% for book in books %}
-            <a href="/booktest/detail/{{book.id}}"> <li>{{ book }}</li> </a>
+            {# <a href="/booktest/detail/{{book.id}}"> <li>{{ book }}</li> </a> #}
+            <a href="{% url 'booktest:detail' book.id %}"> <li>{{ book }}</li> </a>
             {% endfor %}
         </ul>
     </div>
 
-    <div>
-        <audio src=""></audio>
-    </div>
-    <div>
 
+    <div class="pict">
+<!--        <iframe src="/static/img/afc.jpg" frameborder="0"></iframe>-->
+        <img src="/static/img/afc.jpg" alt="">
+
+    </div>
+     <div>
+        <audio src="/static/resource/山鬼.mp3" controls style="width: 300px;"></audio>
     </div>
 </body>
 </html>

@@ -20,11 +20,11 @@ from django.urls import path, include
 路由地址配置
 每一个网址绑定一个视图函数，视图函数返回页面
 MVT T视图 作用： 接受请求  处理数据 返回响应
-
+总的路由配置文件 == 项目路由文件 使用include包含
 '''
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('booktest/', include('booktest.urls'))
+    path('', include('booktest.urls', namespace='booktest'))
 
 ]
