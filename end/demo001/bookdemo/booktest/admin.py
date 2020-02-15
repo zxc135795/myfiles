@@ -3,7 +3,7 @@ from django.contrib.admin import ModelAdmin
 # Register your models here.
 # Django后台管理
 
-from .models import Book, Hero
+from .models import Book, Hero, User
 
 
 class HeroInline(admin.StackedInline):
@@ -12,17 +12,18 @@ class HeroInline(admin.StackedInline):
 
 
 class HeroAdmin(ModelAdmin):
-    list_display = ('name', 'gender', 'content','book')
-    search_fields = ('name','gender','content')
-    list_filter = ('name','gender','content')
+    list_display = ('name', 'gender', 'content', 'book')
+    search_fields = ('name', 'gender', 'content')
+    list_filter = ('name', 'gender', 'content')
 
 
 class BookAdmin(ModelAdmin):
     list_display = ('title', 'price', 'pub_date')
     search_fields = ('title', 'price')
-    list_filter = ('title','price')
+    list_filter = ('title', 'price')
     inlines = [HeroInline]
 
 
 admin.site.register(Hero, HeroAdmin)
 admin.site.register(Book, BookAdmin)
+admin.site.register(User)
