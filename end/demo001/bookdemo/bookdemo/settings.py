@@ -24,8 +24,9 @@ SECRET_KEY = '$1)y5rb1afn5r4dspo0de7_v9#+c70&&83jmxq+!x!()2tyams'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'booktest',
+    'publish',
 ]
 
 MIDDLEWARE = [

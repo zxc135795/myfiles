@@ -25,6 +25,8 @@ MVT T视图 作用： 接受请求  处理数据 返回响应
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('booktest.urls', namespace='booktest'))
+    path('publish/', include('publish.urls', namespace='publish')),
+    path('', include('booktest.urls', namespace='booktest')),
+
 
 ]

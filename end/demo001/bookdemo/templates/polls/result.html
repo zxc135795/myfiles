@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结果页</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+    <div>
+         <h2>问题是: {{question.title}}</h2>
+
+        <ul>
+            <h3>得票情况</h3>
+            {% for c in question.choices.all %}
+                <li>{{c.content}}   {{c.votes}} 票</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'publish:index' %}">返回</a>
+
+
+
+    </div>
+
+
+
+</body>
+</html>

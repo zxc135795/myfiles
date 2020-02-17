@@ -1,15 +1,16 @@
 *{
+    width: 1000px;
     margin:auto;
-    padding: 5px;
+    padding: 1px;
     /*font-size: 32px;*/
     color: #391793;
-    width: 1000px;
+    text-align: center;
+    text-decoration: none;
 
 }
 
 .content{
-    margin: 10px;
-    padding: 0px;
+    margin: 1px;
     color: blue;
     font-size: 18px;
     font-family: 仿宋;
