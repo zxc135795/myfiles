@@ -11,7 +11,7 @@
 <div>
 
     <ul>
-        {% for hero in book.hero_set.all %}
+        {% for hero in book.heros.all %}
         <li>
             <p>
                 {{ hero.book }} -- {{ hero.content }} -- {{ hero.gender }} -- {{ hero.name }}
