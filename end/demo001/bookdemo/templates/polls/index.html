@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <title>投票首页</title>
     <link rel="stylesheet" href="static/css/main.css">
+        <style>
+        *{
+            width: 1000px;
+
+        }
+    </style>
 </head>
 <body>
-    <div>
+    <div class="content">
         <h1>投票问题列表</h1>
         <ul>
             {% for q in questions %}

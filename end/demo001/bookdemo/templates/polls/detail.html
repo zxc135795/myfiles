@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>投票</title>
+
     <link rel="stylesheet" href="static/css/main.css">
+
 </head>
 <body>
-<div>
-
-
+<div class="content">
     <h2> 投票的问题是： {{question.title}} </h2>
-
     <ul>
         <h3>选项有</h3>
-
         <form action="#" method="post">
             {% for c in question.choices.all %}
             {% if forloop.counter == 1 %}
@@ -21,9 +19,7 @@
             {% else %}
             <li><input type="radio" name="num" value="{{c.id}}"> {{c.content}}</li>
             {% endif %}
-
             {% endfor %}
-
             <input type="submit" value="投票">
         </form>
     </ul>
