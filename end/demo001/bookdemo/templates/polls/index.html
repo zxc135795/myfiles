@@ -2,7 +2,7 @@
 
 
 {% block body %}
-    <div class="content">
+    <div class="content" style="color: blue">
         <h1>投票问题列表</h1>
         <ul>
             {% for q in questions %}
@@ -12,7 +12,7 @@
 
     </div>
     <div>
-        <a href="{% url 'booktest:index' %}">返回主页面</a>
+        <a href="{% url 'booktest:index' %}"><b>返回主页面</b></a>
     </div>
 {% endblock %}
 

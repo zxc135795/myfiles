@@ -1,13 +1,18 @@
 {% extends 'polls/base.html' %}
 {% block body%}
-<form action="" method="post">
-    用户名：<input type="text" name="username">
-    <br>
-    密码： <input type="password" name="password">
-    <br>
-    重复密码：<input type="password" name="password2">
-    <br>
-    <input type="submit" value="注册">
+<div class="container">
+    <form action="" method="post">
+        {% csrf_token %}
+        用户名：<input type="text" name="username">
+        <br>
+        密码： <input type="password" name="password">
+        <br>
+        重复密码：<input type="password" name="password2">
+        <br>
+        <input type="submit" value="注册">
 
-</form>
+    </form>
+    <a href="{% url 'publish:index' %}">返回</a>
+</div>
+
 {% endblock%}

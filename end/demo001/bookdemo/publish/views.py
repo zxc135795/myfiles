@@ -30,6 +30,9 @@ def detail(request, qid):
                         return HttpResponse("问题不合法")
             except Exception as e:
                 print(e)
+        else:
+            url = reverse("publish:login") + "?next=/publish/detail/" + qid + "/"
+            return redirect(to=url)
     elif request.method == "POST":
 
         choiceid = request.POST.get("num")
@@ -37,6 +40,7 @@ def detail(request, qid):
             choice = Choices.objects.get(id=choiceid)
             choice.votes += 1
             choice.save()
+            request.user.questions.add(Question.objects.get(id=qid))
             url = reverse("publish:result", args=(qid,))
             return redirect(to=url)
         except Exception as e:
@@ -61,7 +65,11 @@ def login(request):
         user = authenticate(username=username, password=password)
         if user:
             lin(request, user)
-            url = reverse('publish:index')
+            next = request.GET.get('next')
+            if next:
+                url = next
+            else:
+                url = reverse('publish:index')
             return redirect(to=url)
         else:
             url = reverse('publish:login')

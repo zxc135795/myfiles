@@ -20,3 +20,19 @@
 /*    width: 300px;*/
 /*    height: 170px;*/
 /*}*/
+*{
+    margin:0;
+    padding:0;
+    color:red;
+    font-family: 方正粗黑宋简体 ;
+    text-decoration: none;
+}
+
+.container{
+    width:500px;
+    margin:0 auto;
+}
+
+.center{
+    text-align:center;
+}
