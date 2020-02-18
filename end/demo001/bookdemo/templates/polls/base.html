@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="static/css/main.css">
+<!--    <style>-->
+<!--        * {-->
+<!--            width: 1000px;-->
+
+<!--        }-->
+<!--    </style>-->
+</head>
+<body>
+<div>
+    {% block header %}
+        <div>
+            {% if request.user and request.user.username != '' %}
+               用户名： {{ request.user}} <a href="{% url 'publish:logout' %}">退出</a>
+            {% else %}
+            <a href="{% url 'publish:login' %}">登录</a> <a href="{% url 'publish:regist' %}">注册</a>
+            {% endif%}
+
+        </div>
+
+    {% endblock %}
+
+    {% block body %}
+    身体
+    {% endblock %}
+
+    {% block footer%}
+    底部
+    {% endblock %}
+
+
+</div>
+</body>
+</html>

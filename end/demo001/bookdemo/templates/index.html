@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <title>首页</title>
     <link rel="stylesheet" href="static/css/main.css">
-<!--    <style>-->
-<!--        *{-->
-<!--            width: 1000px;-->
-<!--            text-align: center;-->
-<!--        }-->
-<!--        a{-->
-<!--            text-decoration: none;-->
-<!--        }-->
-<!--    </style>-->
+
 </head>
 <body >
-    <h1>首页欢迎</h1>
-<!--    {{ books }}-->
-    <div class="content">
-        <h2>所有书籍</h2>  <a href="{% url 'publish:index' %}" style="text-decoration:underline red"><h2 style="color: red;">投票页面</h2></a>
+    <div style="text-align: center">
 
-        <ul>
+
+           <h1>首页欢迎</h1>
+    <br>
+    <a href="{% url 'publish:index' %}" style="text-decoration:underline red"><h2 style="color: red;">投票页面</h2></a>
+    <br>
+    <div class="content">
+        <h2>所有书籍</h2>
+
+        <p><b>查看详情请点击书名</b></p>
+        <br>
+        <ul style="margin-left: 10px">
             {% for book in books %}
             {# <a href="/booktest/detail/{{book.id}}"> <li>{{ book }}</li> </a> #}
+
 
             <li>
                 <a href="{% url 'booktest:detail' book.id %}"> {{ book }} ---- {{book.price}} ---- {{book.pub_date}}</a>
@@ -45,5 +45,8 @@
      <div>
         <audio src="/static/resource/山鬼.mp3" controls style="width: 300px;"></audio>
     </div>
+
+    </div>
+
 </body>
 </html>

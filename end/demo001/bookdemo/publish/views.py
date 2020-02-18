@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect, reverse
-
 # Create your views here.
-
 # 视图数据请求
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Question, Choices
-
+from .models import Question, Choices, User
 from django.views.generic import View, TemplateView, ListView, CreateView, DetailView, DeleteView, UpdateView
+from django.contrib.auth import authenticate, login as lin, logout as lout
 
 
 def index(request):
@@ -17,12 +15,21 @@ def index(request):
 
 def detail(request, qid):
     if request.method == "GET":
-        try:
-            question = Question.objects.get(id=qid)
-            return render(request, 'polls/detail.html', {"question": question})
-        except Exception as e:
-            print(e)
-            return HttpResponse("问题不合法")
+        if request.user and request.user.username != '':
+            try:
+                question = Question.objects.get(id=qid)
+                if question in request.user.questions.all():
+                    url = reverse('publish:result', args=(qid,))
+                    return redirect(to=url)
+                # return render(request, 'polls/detail.html', {"question": question})
+                else:
+                    try:
+                        return render(request, 'polls/detail.html', {"question": question})
+                    except Exception as e:
+                        print(e)
+                        return HttpResponse("问题不合法")
+            except Exception as e:
+                print(e)
     elif request.method == "POST":
 
         choiceid = request.POST.get("num")
@@ -43,6 +50,46 @@ def result(request, qid):
         return render(request, 'polls/result.html', {"question": question})
     except:
         return HttpResponse("问题不合法")
+
+
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'polls/login.html')
+    elif request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            lin(request, user)
+            url = reverse('publish:index')
+            return redirect(to=url)
+        else:
+            url = reverse('publish:login')
+            return redirect(to=url)
+
+
+def logout(request):
+    lout(request)
+    url = reverse('publish:index')
+    return redirect(to=url)
+
+
+def regist(request):
+    if request.method == 'GET':
+        return render(request, 'polls/regist.html')
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+        if User.objects.filter(username=username).count() > 0:
+            return HttpResponse('用户名存在')
+        else:
+            if password == password2:
+                User.objects.create_user(username=username, password=password)
+                url = reverse('publish:login')
+                return redirect(to=url)
+            else:
+                return HttpResponse('两次密码不一致')
 
 
 # 基于CBV的形式实现首页

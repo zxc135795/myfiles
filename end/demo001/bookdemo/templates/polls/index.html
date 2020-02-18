@@ -1,28 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>投票首页</title>
-    <link rel="stylesheet" href="static/css/main.css">
-        <style>
-        *{
-            width: 1000px;
+{% extends 'polls/base.html'%}
 
-        }
-    </style>
-</head>
-<body>
+
+{% block body %}
     <div class="content">
         <h1>投票问题列表</h1>
         <ul>
             {% for q in questions %}
-                <li><a href="{% url 'publish:detail' q.id %}"> {{forloop.counter}} . {{q.title}}</a> </li>
+            <li><a href="{% url 'publish:detail' q.id %}"> {{forloop.counter}} . {{q.title}}</a></li>
             {% endfor %}
         </ul>
-        
+
     </div>
     <div>
         <a href="{% url 'booktest:index' %}">返回主页面</a>
     </div>
-</body>
-</html>
+{% endblock %}
+
+
