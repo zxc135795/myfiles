@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>结果页</title>
-    <link rel="stylesheet" href="/static/css/main.css">
-</head>
-<body>
-    <div  class="container">
+{% extends 'polls/base.html'%}
+{% block title %}
+   投票结果
+{% endblock%}
+
+{% block body %}
+     <div  class="container">
          <h2>问题是: {{question.title}}</h2>
 
         <ul>
@@ -23,6 +21,9 @@
     </div>
 
 
+{% endblock%}
 
-</body>
-</html>
+
+
+
+

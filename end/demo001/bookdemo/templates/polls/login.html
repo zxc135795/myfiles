@@ -1,15 +1,28 @@
 {% extends 'polls/base.html' %}
+
+{% block title %}
+登录
+{% endblock%}
 {% block body%}
 <div >
 
     <form action="" method="post">
         {% csrf_token %}
-        用户名：<input type="text" name="username" >
+        {% comment %}
+        用户名：<input type="text" name="username" required>
         <br>
-        密码： <input type="password" name="password">
+        密码： <input type="password" name="password" required>
         <br>
+        {% endcomment %}
+
+
+        {{lf.username.label}}:   {{lf.username}}
+        <br>
+        {{lf.password.label}}:   {{lf.password}}
+        <br>
+
         <input type="submit" value="登录">
-        
+        {{ errors }}
     </form>
 </div>
 <a href="{% url 'publish:index' %}"><b>返回</b></a>

@@ -6,6 +6,7 @@ from django.template import loader
 from .models import Question, Choices, User
 from django.views.generic import View, TemplateView, ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.contrib.auth import authenticate, login as lin, logout as lout
+from .forms import LoginForm,RegistForm
 
 
 def index(request):
@@ -58,22 +59,25 @@ def result(request, qid):
 
 def login(request):
     if request.method == 'GET':
-        return render(request, 'polls/login.html')
+        lf = LoginForm()
+        return render(request, 'polls/login.html', {'lf': lf})
     elif request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user:
-            lin(request, user)
-            next = request.GET.get('next')
-            if next:
-                url = next
+        lf = LoginForm(request.POST)
+        if lf.is_valid():
+            username = lf.cleaned_data['username']
+            password = lf.cleaned_data['password']
+
+            user = authenticate(username=username, password=password)
+            if user:
+                lin(request, user)
+                next = request.GET.get('next')
+                if next:
+                    url = next
+                else:
+                    url = reverse('publish:index')
+                return redirect(to=url)
             else:
-                url = reverse('publish:index')
-            return redirect(to=url)
-        else:
-            url = reverse('publish:login')
-            return redirect(to=url)
+                return render(request, 'polls/login.html', {'errors': '用户名或密码错误'})
 
 
 def logout(request):
@@ -84,20 +88,26 @@ def logout(request):
 
 def regist(request):
     if request.method == 'GET':
-        return render(request, 'polls/regist.html')
+        rf = RegistForm()
+        return render(request, 'polls/regist.html', {"rf": rf})
+        # return render(request, 'polls/regist.html')
     else:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        password2 = request.POST.get('password2')
-        if User.objects.filter(username=username).count() > 0:
-            return HttpResponse('用户名存在')
-        else:
-            if password == password2:
-                User.objects.create_user(username=username, password=password)
-                url = reverse('publish:login')
-                return redirect(to=url)
+        rf = RegistForm(request.POST)
+        if rf.is_valid():
+            username = rf.cleaned_data['username']
+            password = rf.cleaned_data['password']
+            password2 = rf.cleaned_data['password2']
+            if User.objects.filter(username=username).count() > 0:
+                return render(request, 'polls/regist.html', {'errors': '用户名已存在'})
+
             else:
-                return HttpResponse('两次密码不一致')
+                if password == password2:
+                    # User.objects.create_user(username=username, password=password)
+                    rf.save()
+                    url = reverse('publish:login')
+                    return redirect(to=url)
+                else:
+                    return render(request, 'polls/regist.html', {'errors': '密码不一致'})
 
 
 # 基于CBV的形式实现首页

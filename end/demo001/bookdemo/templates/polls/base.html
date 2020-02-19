@@ -2,25 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>
+        {% block title %}
+            投票应用
+        {% endblock%}
+    </title>
     <link rel="stylesheet" href="/static/css/main.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            color: red;
-            text-decoration: none;
-        }
-
-        .container {
-            width: 500px;
-            margin: 0 auto;
-        }
-
-        .center {
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
 <div class="container">
@@ -41,10 +28,10 @@
     {% endblock %}
 
     {% block footer%}
-     <div class="pict">
-<!--        <iframe src="/static/img/afc.jpg" frameborder="0"></iframe>-->
-        <img src="/static/img/afc.jpg" alt="" style="width: 300px;height: 170px">
-     </div>
+<!--     <div class="pict">-->
+<!--&lt;!&ndash;        <iframe src="/static/img/afc.jpg" frameborder="0"></iframe>&ndash;&gt;-->
+<!--        <img src="/static/img/afc.jpg" alt="" style="width: 300px;height: 170px">-->
+<!--     </div>-->
     {% endblock %}
 
 
