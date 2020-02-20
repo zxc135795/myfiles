@@ -29,8 +29,8 @@ def index(request):
     return render(request, 'index.html', {'ads': ads, 'page': page})
 
 
-def detail(request):
-    return render(request, 'single.html')
+def detail(request,id):
+    return render(request, 'single.html',)
 
 
 def contact(request):

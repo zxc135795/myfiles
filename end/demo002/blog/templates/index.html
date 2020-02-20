@@ -76,7 +76,7 @@
             </div>
         </header>
         <div class="entry-content clearfix">
-            <p>{{a.body}}</p>
+            <p>{{a.body|safe}}</p>
             <div class="read-more cl-effect-14">
                 <a href="{% url 'blogapp:detail' a.id %}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
             </div>

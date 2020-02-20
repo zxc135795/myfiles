@@ -33,8 +33,8 @@ class Article(models.Model):
     author = models.CharField(max_length=20, verbose_name='作者')
     # 整数类型 可自加 PositiveIntegerField
     views = models.PositiveIntegerField(default=0, verbose_name='浏览量')
-    body = models.TextField(verbose_name='正文')
-    # body = UEditorField(imagePath='img/', width='100%', verbose_name='正文')
+    # body = models.TextField(verbose_name='正文')
+    body = UEditorField(imagePath='img/', width='100%', verbose_name='正文')
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
