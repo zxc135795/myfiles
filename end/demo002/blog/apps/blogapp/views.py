@@ -22,15 +22,26 @@ from django.core.paginator import Paginator, Page
 # Create your views here.
 def index(request):
     ads = Ads.objects.all()
-    articles = Article.objects.all()
+    year = None
+    month = None
+    typepage = request.GET.get('type')
+    if typepage == 'date':
+        year = request.GET.get('year')
+        month = request.GET.get('month')
+
+        articles = Article.objects.filter(create_time__year=year, create_time__month=month).order_by('-create_time')
+
+    else:
+        articles = Article.objects.all().order_by('-create_time')
+
     paginator = Paginator(articles, 2)
     num = request.GET.get('pagenum', 1)
     page = paginator.get_page(num)
-    return render(request, 'index.html', {'ads': ads, 'page': page})
+    return render(request, 'index.html', {'ads': ads, 'page': page, 'type': typepage, 'year': year, 'month': month})
 
 
-def detail(request,id):
-    return render(request, 'single.html',)
+def detail(request, id):
+    return render(request, 'single.html', )
 
 
 def contact(request):
