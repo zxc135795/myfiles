@@ -20,7 +20,7 @@
                     <ul>
                         {% for dates in latedate %}
                             <li>
-                                <a href="?type=date&year={{dates.year}}&month={{dates.month}}">{{dates.year}} 年 {{dates.month}} 月</a>
+                                <a href="/?type=date&year={{dates.year}}&month={{dates.month}}">{{dates.year}} 年 {{dates.month}} 月</a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -32,7 +32,7 @@
                     <ul>
                         {% for cate in latecategory %}
                         <li>
-                            <a href="?type=category&category_id={{cate.id}}">{{cate.name}} <span class="post-count">({{cate.article_set.count}})</span></a>
+                            <a href="/?type=category&category_id={{cate.id}}">{{cate.name}} <span class="post-count">({{cate.article_set.count}})</span></a>
                         </li>
                         {% endfor%}
                     </ul>
@@ -44,14 +44,14 @@
                     <ul>
                         {% for tag in taps %}
                         <li>
-                            <a href="?type=tag&tag_id={{tag.id}}">{{tag.name}}</a>
+                            <a href="/?type=tag&tag_id={{tag.id}}">{{tag.name}}</a>
                         </li>
 
                         {% endfor %}
                     </ul>
                 </div>
                 <div class="rss">
-                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                    <a href="{% url 'blogapp:rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>
             </aside>
 {% endblock %}

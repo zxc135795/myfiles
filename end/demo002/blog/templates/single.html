@@ -1,4 +1,5 @@
 {% extends 'base2.html' %}
+{% load myfun %}
 {% block title %}
     博客实战文章也
 {% endblock %}
@@ -8,14 +9,14 @@
 
 							<article class="post post-1">
 									<header class="entry-header">
-											<h1 class="entry-title">Django 博客开发入门教程：前言</h1>
+											<h1 class="entry-title">{{article.title}}</h1>
 											<div class="entry-meta">
-													<span class="post-category"><a href="#">Django 博客教程</a></span>
+													<span class="post-category"><a href="#"> {{article.category_set.name}}</a></span>
 													<span class="post-date"><a href="#"><time class="entry-date"
-																																		datetime="2012-11-09T23:15:57+00:00">2017年5月11日</time></a></span>
-													<span class="post-author"><a href="#">码农</a></span>
-													<span class="comments-link"><a href="#">4 评论</a></span>
-													<span class="views-count"><a href="#">588 阅读</a></span>
+																							  datetime="2012-11-09T23:15:57+00:00">{{article.create_time|date:'Y年m月d日'}}</time></a></span>
+													<span class="post-author"><a href="#">{{article.author|authorFormat:'作者'}}</a></span>
+													<span class="comments-link"><a href="#">{{article.comment_set.count}} 评论</a></span>
+													<span class="views-count"><a href="#">{{article.views}} 阅读</a></span>
 											</div>
 									</header>
 									<div class="entry-content clearfix">

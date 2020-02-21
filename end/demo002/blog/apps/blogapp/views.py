@@ -59,8 +59,15 @@ def index(request):
     # return render(request, 'index.html', {'ads': ads, 'page': page, 'type': typepage, 'year': year, 'month': month})
 
 
-def detail(request, id):
-    return render(request, 'single.html', )
+def detail(request, articleid):
+    try:
+        article = Article.objects.get(id=articleid)
+
+    except Exception as e:
+        print(e)
+        return HttpResponse('错误')
+
+    return render(request, 'single.html', locals())
 
 
 def contact(request):

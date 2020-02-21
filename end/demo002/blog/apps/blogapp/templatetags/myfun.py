@@ -12,7 +12,7 @@ register = Library()
 
 @register.filter
 def dateFormat(data):
-    return '%D-%d-%d' % (data.year, data.month, data.day)
+    return '%D年%d月%d日' % (data.year, data.month, data.day)
 
 
 @register.filter
