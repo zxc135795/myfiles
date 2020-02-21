@@ -29,3 +29,11 @@ def get_latestarticles(num=3):
 def get_latedates(num=3):
     dates = Article.objects.dates('create_time', 'month', 'DESC')[:num]
     return dates
+
+
+@register.simple_tag
+def get_latecategory():
+    return Category.objects.all().order_by('-id')
+@register.simple_tag
+def get_taps():
+    return Tag.objects.all().order_by('-id')

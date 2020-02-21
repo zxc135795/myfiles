@@ -28,52 +28,26 @@
 
                 <div class="widget widget-category">
                     <h3 class="widget-title">分类</h3>
+                    {% get_latecategory as latecategory %}
                     <ul>
+                        {% for cate in latecategory %}
                         <li>
-                            <a href="#">Django 博客教程 <span class="post-count">(13)</span></a>
+                            <a href="?type=category&category_id={{cate.id}}">{{cate.name}} <span class="post-count">({{cate.article_set.count}})</span></a>
                         </li>
-                        <li>
-                            <a href="#">Python 教程 <span class="post-count">(11)</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Django 用户认证 <span class="post-count">(8)</span></a>
-                        </li>
+                        {% endfor%}
                     </ul>
                 </div>
 
                 <div class="widget widget-tag-cloud">
                     <h3 class="widget-title">标签云</h3>
+                    {% get_taps as taps %}
                     <ul>
+                        {% for tag in taps %}
                         <li>
-                            <a href="#">Django</a>
+                            <a href="?type=tag&tag_id={{tag.id}}">{{tag.name}}</a>
                         </li>
-                        <li>
-                            <a href="#">Python</a>
-                        </li>
-                        <li>
-                            <a href="#">Java</a>
-                        </li>
-                        <li>
-                            <a href="#">笔记</a>
-                        </li>
-                        <li>
-                            <a href="#">文档</a>
-                        </li>
-                        <li>
-                            <a href="#">AngularJS</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">Snippet</a>
-                        </li>
-                        <li>
-                            <a href="#">jQuery</a>
-                        </li>
+
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="rss">

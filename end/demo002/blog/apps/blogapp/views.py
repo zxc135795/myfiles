@@ -22,14 +22,32 @@ from django.core.paginator import Paginator, Page
 # Create your views here.
 def index(request):
     ads = Ads.objects.all()
+    typepage = request.GET.get('type')
     year = None
     month = None
-    typepage = request.GET.get('type')
+    category_id = None
+    tag_id = None
     if typepage == 'date':
         year = request.GET.get('year')
         month = request.GET.get('month')
 
         articles = Article.objects.filter(create_time__year=year, create_time__month=month).order_by('-create_time')
+    elif typepage == 'category':
+        category_id = request.GET.get('category_id')
+        try:
+            category = Category.objects.get(id=category_id)
+            articles = category.article_set.all()
+        except Exception as e:
+            print(e)
+            return HttpResponse('未找到内容')
+    elif typepage == 'tag':
+        tag_id = request.GET.get('tag_id')
+        try:
+            tag = Tag.objects.get(id=tag_id)
+            articles = tag.article_set.all()
+        except Exception as e:
+            print(e)
+            return HttpResponse('未知错误')
 
     else:
         articles = Article.objects.all().order_by('-create_time')
@@ -37,7 +55,8 @@ def index(request):
     paginator = Paginator(articles, 2)
     num = request.GET.get('pagenum', 1)
     page = paginator.get_page(num)
-    return render(request, 'index.html', {'ads': ads, 'page': page, 'type': typepage, 'year': year, 'month': month})
+    return render(request,'index.html',locals())
+    # return render(request, 'index.html', {'ads': ads, 'page': page, 'type': typepage, 'year': year, 'month': month})
 
 
 def detail(request, id):
