@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from .models import *
 from django.core.paginator import Paginator, Page
-
+from .forms import *
+from time import *
 
 # 一个Page中有  object_list代表当前页的所有对象
 # has_next 是不是有下一页
@@ -55,18 +56,41 @@ def index(request):
     paginator = Paginator(articles, 2)
     num = request.GET.get('pagenum', 1)
     page = paginator.get_page(num)
-    return render(request,'index.html',locals())
+    return render(request, 'index.html', locals())
     # return render(request, 'index.html', {'ads': ads, 'page': page, 'type': typepage, 'year': year, 'month': month})
 
 
 def detail(request, articleid):
-    try:
+    if request.method == 'GET':
+        try:
+            article = Article.objects.get(id=articleid)
+            cf = CommentForm()
+            article.views += 1
+            # if sleep(5):
+            article.save()
+            return render(request, 'single.html', locals())
+        except Exception as e:
+            print(e)
+            return HttpResponse('错误')
+    elif request.method == 'POST':
+        cf = CommentForm(request.POST)
+        if cf.is_valid():
+            comment = cf.save(commit=False)
+            comment.article = Article.objects.get(id=articleid)
+            comment.article.views += 1
+            comment.article.save()
+            # if sleep(5):
+            comment.save()
+            url = reverse('blogapp:detail', args=(articleid,))
+            return redirect(to=url)
+    else:
         article = Article.objects.get(id=articleid)
+        article.views += 1
+        cf = CommentForm()
 
-    except Exception as e:
-        print(e)
-        return HttpResponse('错误')
-
+        # if sleep(5):
+        article.save()
+        errors = '输入错误信息'
     return render(request, 'single.html', locals())
 
 
@@ -76,3 +100,9 @@ def contact(request):
 
 def favicon(request):
     return redirect(to='/static/favicon.ico')
+
+
+def allblog(request):
+    article = Article.objects.all()
+
+    return render(request, 'full-width.html', locals())

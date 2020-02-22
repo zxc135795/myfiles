@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^favicon.ico/$',views.favicon),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^rss/$',ArticleFeed(), name="rss"),
+    url(r'^allblog/$', views.allblog, name='allblog'),
+
 ]
