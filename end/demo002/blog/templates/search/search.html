@@ -2,14 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>
-        {% block title %}
-        博客实战
-        {% endblock%}
-    </title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <title>搜索</title>
     <!-- css -->
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -63,45 +56,49 @@
         </div>
     </div>
 </div>
-<div class="content-body">
-    <div class="container">
-        <div class="row">
-            {% block main %}
 
-            {% endblock %}
+<div class="row">
+    <main class="col-md-12">
+        <article class="post post-1">
+            <div class="entry-content clearfix">
+                <div class="content-body">
+                    <div class="container">
+                        <div class="row">
+                            {% if query %}
+                            <h3>搜索结果如下：</h3>
+                            <ul>
+                                {% for result in page.object_list %}
+                                <li>
+                                    <a href="{% url 'blogapp:detail' result.object.id %}">
+                                        {{result.object.title}} </a><br/>
+                                    {% empty %}
+                                </li>
+                                <p>啥也没找到</p>
+                                {% endfor %}
+                            </ul>
 
-            {% block aside %}
 
-            {% endblock %}
+                            {% endif %}
 
-        </div>
-    </div>
-</div>
-<div id="site-footer">
-    {% if article %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <p class="copyright">&copy {{article.create_time.year}} - 采集自<a href="http://www.cssmoban.com/"
-                                                                                target="_blank" title="zzy0371">{{article.author}}</a>
-                    - 由<a href="https://github.com/" title="github" target="_blank">{{article.author}}</a>修改
-                </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </article>
+
+
+        <!-- 简单分页效果
+        <div class="pagination-simple">
+            <a href="#">上一页</a>
+            <span class="current">第 6 页 / 共 11 页</span>
+            <a href="#">下一页</a>
         </div>
-    </div>
-    {% else %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <p class="copyright" style="color: red;font-family: 宋体;font-size: 24px;align-content: center">
-                    十分荣幸得以汝之鉴赏
-                </p>
-            </div>
-        </div>
-    </div>
-    {% endif %}
+        -->
+
+    </main>
+
 </div>
 
-<script src="/static/js/script.js"></script>
 </body>
 </html>

@@ -103,6 +103,8 @@ def favicon(request):
 
 
 def allblog(request):
-    article = Article.objects.all()
-
+    articles = Article.objects.all()
+    paginator = Paginator(articles, 2)
+    num = request.GET.get('pagenum', 1)
+    page = paginator.get_page(num)
     return render(request, 'full-width.html', locals())

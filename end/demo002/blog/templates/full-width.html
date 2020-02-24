@@ -8,18 +8,16 @@
     <article class="post post-1">
 
         <div class="entry-content clearfix">
-            <ul>
-                {% for a in article %}
-                <li>
-					<h1>
-                    	<a href="/">{{a.title}}</a>
-					</h1>
-                </li>
-                {% endfor %}
-            </ul>
-            <div class="read-more cl-effect-14">
-                <a href="/" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
-            </div>
+
+            {% for a in articles %}
+
+            <h1>
+                <a href="{% url 'blogapp:detail' a.id %}">{{a.title}}</a>
+            </h1>
+
+            {% endfor %}
+
+
         </div>
     </article>
     <!-- 简单分页效果
@@ -29,17 +27,33 @@
         <a href="#">下一页</a>
     </div>
     -->
-    <div class="pagination">
+    <div class="pagination col-md-11">
         <ul>
-            <li><a href="">1</a></li>
-            <li><a href="">...</a></li>
-            <li><a href="">4</a></li>
-            <li><a href="">5</a></li>
-            <li class="current"><a href="">6</a></li>
-            <li><a href="">7</a></li>
-            <li><a href="">8</a></li>
-            <li><a href="">...</a></li>
-            <li><a href="">11</a></li>
+            {% if page.has_previous %}
+            <li class="col-md-2"><a
+                    href="?pagenum={{page.previous_page_number}}&type={{typepage}}&year={{year}}&month={{month}}&category_id={{category_id}}&tag_id={{tag_id}}">上一页</a>
+            </li>
+            {% endif %}
+
+            {% for peg in page.paginator.page_range %}
+            {% if peg == page.number %}
+
+            <li class="current col-md-1"><a
+                    href="?pagenum={{peg}}&type={{typepage}}&year={{year}}&month={{month}}&category_id={{category_id}}&tag_id={{tag_id}}">{{peg}}</a>
+            </li>
+            {% else %}
+            <li class="col-md-1"><a
+                    href="?pagenum={{peg}}&type={{typepage}}&year={{year}}&month={{month}}&category_id={{category_id}}&tag_id={{tag_id}}">{{peg}}</a>
+            </li>
+            {% endif %}
+
+            {% endfor %}
+
+            {% if page.has_next %}
+            <li class="col-md-2"><a
+                    href="?pagenum={{ page.next_page_number}}&type={{typepage}}&year={{year}}&month={{month}}&category_id={{category_id}}&tag_id={{tag_id}}">下一页</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </main>
