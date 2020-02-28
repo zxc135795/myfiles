@@ -7,17 +7,124 @@ from rest_framework import serializers
 from .models import *
 
 
-class CategorySerizlizer(serializers.ModelSerializer):
-    goods = serializers.StringRelatedField(many=True)
+class CategorySerizlizer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(label='分类名称')
+
+    def create(self, validated_data):
+        instace = Category.objects.create(**validated_data)
+        return instace
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
+
+
+class GoodSerizlizer(serializers.Serializer):
+    """
+    自定义序列化方法 继承serializer的父类Serializer
+    序列化的字段 exp： name
+    重写序列化方法 def create ，update ，...
+    """
+    name = serializers.CharField(label='商品名称')
+    category = CategorySerizlizer(label='分类')
+
+    def validate_category(self, category):
+        """
+        处理验证category数据
+        :param category: 原始值 被处理
+        :return: 返回值 已处理
+        """
+        try:
+            Category.objects.get(name=category['name'])
+        except:
+            raise serializers.ValidationError('分类不存在')
+        return category
+
+    def validate(self, attrs):
+        """
+        验证数据
+        :param attrs:收到数据
+        :return:更改后数据
+        """
+        try:
+            # 数据正确处理
+            c = Category.objects.get(name=attrs['category']['name'])
+        except:
+            # 数据不匹配处理
+            c = Category.objects.create(name=attrs['category']['name'])
+        # 更改原始数据 返回需要数据
+        attrs['category'] = c
+        return attrs
+
+    def create(self, validated_data):
+        """
+        重写create方法 自定义序列化方法
+        :param validated_data: 接收到的原始数据
+        :return: 返回序列化后的数据
+        """
+        instance = Good.objects.create(**validated_data)
+        return instance
+
+
+# class CustomSerializer(serializers.ReadOnlyField):
+#     def get
+
+class CategorySerizlizer1(serializers.ModelSerializer):
+    # read_only 属性 True 只读 False 可读写
+    goods = serializers.StringRelatedField(many=True, read_only=True)
+
+    # goods = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
 
     class Meta:
         model = Category
-        fields = ('name', 'goods')
+        fields = ('id', 'name', 'goods')
 
 
-class GoodSerizlizer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.name', read_only=True)
+class GoodSerizlizer1(serializers.ModelSerializer):
+    """
+    使用模板result自带序列化方法
+    """
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    category_id = serializers.IntegerField(source='category.id', read_only=True)
 
     class Meta:
         model = Good
-        fields = ('name', 'docs', 'price', 'category')
+        fields = ('id', 'name', 'docs', 'price', 'category_id', 'category_name')
+
+
+class GoodImgsSerializer(serializers.Serializer):
+    img = serializers.ImageField()
+    good = serializers.CharField(source='good.name')
+
+    # def validate_good(self, data):
+    #     print("原始值",data)
+    #     try:
+    #         g = Good.objects.get(name = data)
+    #         print(g,type(g),"+++")
+    #         return g
+    #     except:
+    #         raise serializers.ValidationError("输入的商品不存在")
+    #     # return data
+
+    def validate(self, attrs):
+        print("原始值", attrs["good"]["name"])
+        try:
+            g = Good.objects.get(name=attrs["good"]["name"])
+            print("修改商品", g)
+            attrs["good"] = g
+        except:
+            raise serializers.ValidationError("商品不存在")
+        return attrs
+
+    def create(self, validated_data):
+        print(validated_data)
+        instance = GoodImgs.objects.create(**validated_data)
+        return instance
+
+    def update(self, instance, validated_data):
+        instance.img = validated_data.get("img", instance.img)
+        instance.good = validated_data.get("good", instance.good)
+        instance.save()
+        return instance
