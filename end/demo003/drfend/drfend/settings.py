@@ -37,9 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop',
     'rest_framework',
+    'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -116,8 +120,40 @@ USE_TZ = True
 STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+        # 'rest_framework.authentication.AllowAny',
+        # 'rest_framework_simplejwt.tokens.AccessToken',
+
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ],
+    # 反爬虫，访问频次设置
+    'DEFAULT_THROTTLE_CLASSES': ['rest_framework.throttling.AnonRateThrottle',
+                                 'rest_framework.throttling.UserRateThrottle',
+                                 ],
+    'DEFAULT_THROTTLE_RATES': {
+        # 'user': '10/day',
+        # 'anon': '5/day',
+        'user': None,
+        'anon': None,
+    },
+    # 全局分页设置
+    # DEFAULT_PAGINATION_CLASS 分页配置引用类rest_framework.pagination.所需类（pagination里查看详细功能）
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # PAGE_SIZE 每页展示数目
+    'PAGE_SIZE': 2,
+    # 全局过滤
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
 }
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIAFILES_DIRS = [os.path.join(BASE_DIR, 'media')]
+AUTH_USER_MODEL = 'shop.User'
+# AUTHENTICATION_BACKENDS = ()
+# 允许跨域
+CORS_ORIGIN_ALLOW_ALL = True

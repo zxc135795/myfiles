@@ -23,6 +23,7 @@ from .settings import MEDIA_ROOT
 from rest_framework import routers
 
 from rest_framework.documentation import include_docs_urls
+from rest_framework_simplejwt.views import token_obtain_pair,token_refresh
 
 """
 前后端分离 常用库Djangorestframework
@@ -36,15 +37,24 @@ router = routers.DefaultRouter()
 router.register('categorys', CategoryViewSets)
 router.register('goods', GoodViewSets)
 router.register('goodimgs', GoodImgsViewSets)
-
+router.register('users', UserViewSets)
+router.register('orders', OrderViewSets)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    url(r'^categorylist/$', categoryList, name='categorylist'),
-    url(r'^categorydetail/(\d+)/$', categoryDetail, name='categorydetail'),
-    url(r'^goodlist/$', goodList, name='goodlist'),
-    url(r'^gooddetail/(\d+)/$', goodDetail, name='gooddetail'),
+
+    # url(r'^categorylist/$', CategoryListView.as_view(), name='categorylist'),
+    # url(r'^categorydetail/(?P<pk>\d+)/$', CategoryDetailView.as_view(), name='categorydetail'),
+    # url(r'^goodlist/$', GoodListView.as_view(), name='goodlist'),
+    # url(r'^gooddetail/(\d+)/$', GoodDetailView.as_view(), name='gooddetail'),
+
+    # url(r'^categorylist/$', categoryList, name='categorylist'),
+    # url(r'^categorydetail/(\d+)/$', categoryDetail, name='categorydetail'),
+    # url(r'^goodlist/$', goodList, name='goodlist'),
+    # url(r'^gooddetail/(\d+)/$', goodDetail, name='gooddetail'),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
+    url(r'^login1/$', token_obtain_pair, name='login1'),
+    url(r'^refresh/$', token_refresh, name='refresh'),
 
     path('api/v1/docs/', include_docs_urls('RestFulAPI', description='RestFulAPI')),
     path('', include('rest_framework.urls')),
